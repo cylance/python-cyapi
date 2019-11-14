@@ -14,9 +14,12 @@ This example will create a connection to the API and return all devices that hav
 
 ```
 from cyapi.cyapi import CyAPI
+from pprint import pprint
 API = CyAPI(tid=your_id, aid=your_aid, ase=your_ase)
 API.create_conn()
-API.get_devices()
+devices = API.get_devices()
+print("Successful: {}".format(devices.is_success))
+pprint(devices.data[0]) # Print info about a single device.
 ```
 
 Additionally you can copy examples/simple_setup.py to your_new_file.py and begin hacking away from there.
