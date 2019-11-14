@@ -1,0 +1,12 @@
+{
+    "memory": [
+    ],
+    "protection": [
+        "C:\\ProgramData\\Symantec\\Symantec Endpoint Protection",
+        "C:\\Program Files (X86)\\Symantec\\Symantec Endpoint Protection",
+        "C:\\Program Files (x86)\\Common Files\\Symantec Shared",
+        "C:\\Program Files\\Symantec\\Symantec Endpoint Protection"
+    ],
+    "script": []
+
+}

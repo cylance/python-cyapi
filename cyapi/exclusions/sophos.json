@@ -1,0 +1,25 @@
+{
+    "memory": [
+        "\\Sophos\\AutoUpdate\\ALsvc.exe",
+        "\\Sophos\\Sophos Anti-Virus\\SAVAdminService.exe",
+        "\\Sophos\\Sophos Anti-Virus\\SavService.exe",
+        "\\Sophos\\Sophos Anti-Virus\\sdcservice.exe",
+        "\\Sophos\\Sophos Network Threat Protection\\bin\\SntpService.exe",
+        "\\Sophos\\Sophos System Protection\\ssp.exe",
+        "\\Sophos\\Sophos Anti-Virus\\Web Control\\swc_service.exe",
+        "\\Sophos\\Sophos Anti-Virus\\Web Intelligence\\swi_service.exe",
+        "\\Sophos\\Sophos Anti-Virus\\Web Intelligence\\swi_filter.exe",
+        "\\Common Files\\Sophos\\Web Intelligence\\swi_fc.exe",
+        "\\Sophos\\Sophos Patch Agent\\spa.exe",
+        "\\health.exe",
+        "\\heartbeat.exe",
+        "\\sdrservice.exe",
+        "\\sophosclean.exe"
+    ],
+    "protection": [
+        "C:\\Program Files\\Sophos\\",
+        "C:\\Program Files (x86)\\Sophos\\",
+        "C:\\ProgramData\\Sophos\\"
+    ],
+    "script": []
+}

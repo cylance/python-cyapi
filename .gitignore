@@ -1,0 +1,9 @@
+creds*.json
+*.pyc
+.vscode/*
+build/*
+dist/*
+jd-*
+*.egg-info*
+*.swo
+*.swp

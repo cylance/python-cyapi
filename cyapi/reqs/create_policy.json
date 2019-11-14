@@ -1,0 +1,248 @@
+{
+	"user_id": "",
+	"policy": {
+		"file_exclusions" : [],
+		"checksum" : "",
+		"memoryviolation_actions": {
+			"memory_violations": [
+			{
+				"action": "Block",
+				"violation_type": "outofprocessallocation"
+			},
+			{
+				"action": "Block",
+				"violation_type": "outofprocesswritepe"
+			},
+			{
+				"action": "Block",
+				"violation_type": "outofprocessmap"
+			},
+			{
+				"action": "Block",
+				"violation_type": "stackpivot"
+			},
+			{
+				"action": "Block",
+				"violation_type": "outofprocesswrite"
+			},
+			{
+				"action": "Block",
+				"violation_type": "outofprocessunmapmemory"
+			},
+			{
+				"action": "Block",
+				"violation_type": "outofprocesscreatethread"
+			},
+			{
+				"action": "Block",
+				"violation_type": "lsassread"
+			},
+			{
+				"action": "Block",
+				"violation_type": "outofprocessapc"
+			},
+			{
+				"action": "Block",
+				"violation_type": "outofprocessoverwritecode"
+			},
+			{
+				"action": "Block",
+				"violation_type": "stackprotect"
+			},
+			{
+				"action": "Block",
+				"violation_type": "overwritecode"
+			}
+			],
+			"memory_violations_ext": [
+			{
+				"action": "Block",
+				"violation_type": "maliciouspayload"
+			},
+			{
+				"action": "Block",
+				"violation_type": "trackdataread"
+			},
+			{
+				"action": "Block",
+				"violation_type": "zeroallocate"
+			},
+			{
+				"action": "Block",
+				"violation_type": "dyldinjection"
+			}
+			],
+			"memory_exclusion_list": []
+		},
+		"policy": [
+		{
+			"name": "auto_blocking",
+			"value": "0"
+		},
+		{
+			"name": "auto_uploading",
+			"value": "1"
+		},
+		{
+			"name": "threat_report_limit",
+			"value": "500"
+		},
+		{
+			"name": "low_confidence_threshold",
+			"value": "-600"
+		},
+		{
+			"name": "full_disc_scan",
+			"value": "2"
+		},
+		{
+			"name": "watch_for_new_files",
+			"value": "1"
+		},
+		{
+			"name": "memory_exploit_detection",
+			"value": "0"
+		},
+		{
+			"name": "trust_files_in_scan_exception_list",
+			"value": "0"
+		},
+		{
+			"name": "logpolicy",
+			"value": "1"
+		},
+		{
+			"name": "script_control",
+			"value": "0"
+		},
+		{
+			"name": "prevent_service_shutdown",
+			"value": "1"
+		},
+		{
+			"name": "scan_max_archive_size",
+			"value": "125"
+		},
+		{
+			"name": "sample_copy_path",
+			"value": ""
+		},
+		{
+			"name": "kill_running_threats",
+			"value": "0"
+		},
+		{
+			"name": "show_notifications",
+			"value": "0"
+		},
+		{
+			"name": "optics_set_disk_usage_maximum_fixed",
+			"value": "1000"
+		},
+		{
+			"name": "optics_malware_auto_upload",
+			"value": "0"
+		},
+		{
+			"name": "optics_memory_defense_auto_upload",
+			"value": "0"
+		},
+		{
+			"name": "optics_script_control_auto_upload",
+			"value": "0"
+		},
+		{
+			"name": "optics_application_control_auto_upload",
+			"value": "0"
+		},
+		{
+			"name": "device_control",
+			"value": "0"
+		},
+		{
+			"name": "optics",
+			"value": "0"
+		},
+		{
+			"name": "auto_delete",
+			"value": "0"
+		},
+		{
+			"name": "days_until_deleted",
+			"value": "14"
+		},
+		{
+			"name": "pdf_auto_uploading",
+			"value": "0"
+		},
+		{
+			"name": "ole_auto_uploading",
+			"value": "0"
+		},
+		{
+			"name": "data_privacy",
+			"value": "0"
+		},
+		{
+			"name": "docx_auto_uploading",
+			"value": "0"
+		},
+		{
+			"name": "powershell_auto_uploading",
+			"value": "0"
+		},
+		{
+			"name": "python_auto_uploading",
+			"value": "0"
+		},
+		{
+			"name": "autoit_auto_uploading",
+			"value": "0"
+		},
+		{
+			"name": "optics_show_notifications",
+			"value": "0"
+		},
+		{
+			"name": "custom_thumbprint",
+			"value": "null"
+		},
+		{
+			"name": "scan_exception_list",
+			"value": []
+		}
+		],
+		"policy_name": "CHANGE ME",
+		"script_control": {
+			"activescript_settings": {
+				"control_mode": "Alert"
+			},
+			"global_settings": {
+				"allowed_folders": [],
+				"control_mode": "Alert"
+			},
+			"macro_settings": {
+				"control_mode": "Alert"
+			},
+			"powershell_settings": {
+				"console_mode": "Allow",
+				"control_mode": "Alert"
+			}
+		},
+		"filetype_actions": {
+			"suspicious_files": [{
+				"actions": "2",
+				"file_type": "executable"
+			}],
+			"threat_files": [{
+				"actions": "2",
+				"file_type": "executable"
+			}]
+		},
+		"logpolicy": {
+			"log_upload": "1",
+			"maxlogsize": "100",
+			"retentiondays": "30"
+		}
+	}
+}

@@ -1,0 +1,10 @@
+{
+    "memory": [
+    ],
+    "protection": [
+        "C:\\Windows\\CarbonBlack\\Store",
+        "/private/var/lib/cb/store/"
+    ],
+    "script": []
+
+}

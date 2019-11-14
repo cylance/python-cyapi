@@ -1,0 +1,10 @@
+{
+    "memory": [],
+    "protection": [
+        "C:\\Windows\\ccmcache\\"
+    ],
+    "script": [
+        "/windows/ccm/systemtemp/*.vbs",
+        "/windows/ccm/systemtemp/*.ps1"
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "memory": [
+        "\\program files\\windows defender advanced threat protection\\mssense.exe",
+        "\\program files\\windows defender\\nissrv.exe",
+        "\\program files\\windows defender\\msmpeng.exe"
+    ],
+    "protection": [
+        "C:\\Program Files\\Windows Defender\\",
+        "C:\\Program Files\\Windows Defender Advanced Threat Protection\\",
+        "C:\\ProgramData\\Microsoft\\Windows Defender\\",
+        "C:\\ProgramData\\Microsoft\\Windows Defender Advanced Threat Protection\\"
+    ],
+    "script": []
+}

@@ -1,0 +1,16 @@
+{
+    "memory": [
+        "\\Program Files (x86)\\Trend Micro\\BM\\TMBMSRV.exe",
+        "\\Program Files (x86)\\Trend Micro\\OfficeScan Client\\CCSF\\TmCCSF.exe",
+        "\\Program Files (x86)\\Trend Micro\\OfficeScan Client\\Ntrtscan.exe",
+        "\\Program Files (x86)\\Trend Micro\\OfficeScan Client\\PccNTMon.exe",
+        "\\Program Files (x86)\\Trend Micro\\OfficeScan Client\\TmListen.exe",
+        "\\Program Files (x86)\\Trend Micro\\OfficeScan Client\\TmPfw.exe"
+
+    ],
+    "protection": [
+        "C:\\Program Files (x86)\\Trend Micro\\",
+        "C:\\ProgramData\\Trend Micro\\"
+    ],
+    "script": []
+}

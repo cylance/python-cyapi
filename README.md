@@ -13,7 +13,7 @@ python setup.py install
 This example will create a connection to the API and return all devices that have registered.
 
 ```
-from cyapi.cyAPIv3 import CyAPI
+from cyapi.cyapi import CyAPI
 API = CyAPI(tid=your_id, aid=your_aid, ase=your_ase)
 API.create_conn()
 API.get_devices()

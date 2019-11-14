@@ -1,0 +1,12 @@
+{
+    "memory": [
+        "\\Program Files\\Microsoft Security Client\\MsMpEng.exe",
+        "\\Program Files\\Microsoft Security Client\\msseces.exe"
+    ],
+    "protection": [
+        "C:\\ProgramData\\Microsoft\\Microsoft Antimalware\\Quarantine\\",
+        "C:\\ProgramData\\Microsoft\\Microsoft Antimalware\\scans\\filesstash\\",
+        "C:\\ProgramData\\Microsoft\\Microsoft Antimalware\\localcopy\\"
+    ],
+    "script": []
+}

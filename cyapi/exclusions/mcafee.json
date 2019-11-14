@@ -1,0 +1,30 @@
+{
+    "memory": [
+        "\\Program Files\\Common Files\\McAfee\\Engine\\scanners\\x86_64\\datrep\\1.50.1291.1\\mcdatrep.exe",
+        "\\Program Files\\Common Files\\McAfee\\SystemCore\\mfemms.exe",
+        "\\Program Files\\McAfee\\Agent\\masvc.exe",
+        "\\Program Files\\McAfee\\Agent\\x86\\macmnsvc.exe",
+        "\\Program Files\\McAfee\\Agent\\x86\\macompatsvc.exe",
+        "\\Program Files\\McAfee\\Agent\\x86\\mctray.exe",
+        "\\Program Files\\McAfee\\Agent\\x86\\mfemactl.exe",
+        "\\Program Files\\McAfee\\Endpoint Security\\Endpoint Security Platform\\mfeesp.exe",
+        "\\Program files\\mcafee\\endpoint security\\threat prevention\\mfetp.exe",
+        "\\Windows\\System32\\mfevtps.exe",
+        "\\Program Files\\McAfee\\Endpoint Security\\Firewall\\mfefw.exe",
+        "\\Program Files\\McAfee\\Endpoint Security\\Adaptive threat Protection\\mfeatp.exe",
+        "\\Program Files\\Common Files\\McAfee\\SystemCore\\MFEFIRE.exe",
+        "\\Program Files\\Common Files\\McAfee\\SystemCore\\mfecanary.exe",
+        "\\Program Files (x86)\\McAfee\\Endpoint Security\\Endpoint Security Platform\\mfeconsole.exe",
+        "\\Program Files (x86)\\McAfee\\Common Framework\\updaterui.exe",
+        "\\Program Files\\Common Files\\McAfee\\AVSolution\\mcshield.exe"
+    ],
+    "protection": [
+        "/opt/NAI/LinuxShield/",
+        "/opt/McAfee/",
+        "/opt/McAfee/cma/",
+        "/opt/isec/ens/threatprevention/bin/",
+        "/opt/isec/ens/esp/bin/"
+    ],
+    "script": []
+
+}

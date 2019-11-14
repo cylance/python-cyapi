@@ -1,0 +1,18 @@
+{
+    "memory": [
+        "\\Program Files (x86)\\Tanium\\Tanium Client\\TaniumClient.exe",
+        "\\Program Files\\Tanium\\Tanium Client\\TaniumClient.exe",
+        "/Library/Tanium/TaniumClient/TaniumClient",
+        "/opt/Tanium/TaniumClient/taniumclient"
+    ],
+    "protection": [
+        "C:\\Program Files (x86)\\Tanium",
+        "C:\\Program Files\\Tanium",
+        "/Library/Tanium/TaniumClient",
+        "/opt/Tanium/TaniumClient"
+    ],
+    "script": [
+        "/Program Files (x86)/Tanium",
+        "/Program Files/Tanium"
+    ]
+}
