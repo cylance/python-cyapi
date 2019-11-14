@@ -74,15 +74,16 @@ devices = API.get_devices()
 detailed_devices = []
 
 before = datetime.utcnow() - timedelta(days=int(args.days))
-for device in devices:
-    detail = API.get_device(device['id'])
-    state = detail['state']
-    date_offline = detail['date_offline']
+device_ids = [d['id'] for d in devices.data]
+bulk_response = API.get_bulk_device(device_ids)
+for device in bulk_response.data:
+    state = device['state']
+    date_offline = device['date_offline']
     if state == "Offline" and date_offline:
         # Sometimes date_offline can be None
         dt = datetime.strptime(date_offline, "%Y-%m-%dT%H:%M:%S.%f")
         if dt < before:
-            detailed_devices.append(detail)
+            detailed_devices.append(device)
 
 for device in detailed_devices:
     print("{} - {} - {}".format(device['host_name'], device['date_offline'], device['state']))
