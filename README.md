@@ -4,7 +4,8 @@ This Library provides python bindings to interact with the Cylance API. Examples
 
 # Supported Systems
 Python 2.7 & Python 3 Compatible
-Tested on MacOS
+Windows
+Mac
 
 # Installation
 
