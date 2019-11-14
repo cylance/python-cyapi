@@ -299,7 +299,7 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
             page_size = data['page_size']
             total_pages = data['total_pages']
             all_urls = [baseURL,]
-            for page in range(2,total_pages):
+            for page in range(2,total_pages+1):
                 updated_param = {"page":page}
                 baseURL = self._add_url_params(baseURL, updated_param)
                 all_urls.append(baseURL)
