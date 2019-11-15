@@ -33,14 +33,14 @@ class Mixin:
 
         return self._make_request("post",baseURL, data=requestBody)
 
-    def get_instaqueries(self, q=None, archived=None, origin_from=None):
+    def get_instaqueries(self, q=None, archived=None, origin_from=None, **kwargs):
         params = {
             "q": q,
             "archived": archived,
             "originated-from": origin_from
         }
 
-        return self.get_list_items("instaqueries", params=params)
+        return self.get_list_items("instaqueries", params=params, **kwargs)
 
     def get_instaquery_results(self, iq_id):
         baseURL = self.baseURL + "instaqueries/v2/{}/results".format(iq_id)

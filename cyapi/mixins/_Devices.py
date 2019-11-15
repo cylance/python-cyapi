@@ -9,11 +9,11 @@ class Mixin:
             "callback_url": callback_url
         }
 
-        return self._make_request("delete",baseURL, data=data)
+        return self._make_request("delete", baseURL, data=data)
 
-    def get_devices(self):
+    def get_devices(self, **kwargs):
         '''Get a list of Devices'''
-        return self.get_list_items('devices')
+        return self.get_list_items('devices', **kwargs)
 
     def get_device(self, device_id):
         '''Get Device Detail'''
@@ -35,19 +35,18 @@ class Mixin:
 
         return self.get_item("devices", "macaddress/{}".format(mac))
 
-    def get_device_threats(self, device_id):
+    def get_device_threats(self, device_id, **kwargs):
         # /devices/v2/{unique_device_id}/threats?page=m&page_size=n
         detail = "/{}/threats".format(device_id)
 
-        threats = self.get_list_items("devices", limit=0, detail=detail)
-        return threats
+        return self.get_list_items("devices", limit=0, detail=detail, **kwargs)
 
-    def get_zone_devices(self, zone_id):
+    def get_zone_devices(self, zone_id, **kwargs):
         '''Return list of devices for a given zone'''
         #/devices/v2/{unique_zone_id}/devices?page=m&page_size=n
 
         detail = "/" + zone_id + "/devices"
-        return self.get_list_items("devices", detail=detail)
+        return self.get_list_items("devices", detail=detail, **kwargs)
 
     def update_device(self, device_id, device):
         """endpoint: /devices/v2/{unique_device_id}"""

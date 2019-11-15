@@ -21,9 +21,9 @@ class Mixin:
         return self._make_request("delete", baseURL, data=data)
 
 
-    def get_policies(self):
+    def get_policies(self, **kwargs):
         """Get a list of all Device Policies"""
-        policies = self.get_list_items("policies")
+        policies = self.get_list_items("policies", **kwargs)
         return policies
 
     def get_policy(self, policy_id):

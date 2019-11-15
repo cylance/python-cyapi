@@ -39,7 +39,7 @@ class Mixin:
         baseURL = self.baseURL + "globallists/v2"
         return self._make_request("delete",baseURL, data=data)
 
-    def get_global_list(self, global_list):
+    def get_global_list(self, global_list, **kwargs):
 
         if global_list.lower() == "quarantine":
             type_id = 0
@@ -49,4 +49,4 @@ class Mixin:
             raise ValueError("global_list value must be 'safe' or 'quarantine'")
 
         params = {"listTypeId": type_id}
-        return self.get_list_items('globallists',limit=20, params=params)
+        return self.get_list_items('globallists',limit=20, params=params, **kwargs)

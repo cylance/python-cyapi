@@ -2,8 +2,8 @@ from pprint import pprint
 
 class Mixin:
 
-    def get_rule_sets_to_policy_mapping(self):
-        return self.get_list_items("opticsPolicies","/configurations")
+    def get_rule_sets_to_policy_mapping(self, **kwargs):
+        return self.get_list_items("opticsPolicies","/configurations", **kwargs)
 
     def update_ruleset_in_policy(self, ruleset, policy):
         '''Success Code: 200'''

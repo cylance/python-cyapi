@@ -1,14 +1,14 @@
 
 class Mixin:
 
-    def get_detection_exceptions(self, csv=False):
+    def get_detection_exceptions(self, csv=False, **kwargs):
         # /exceptions/v2
         #/exceptions/v2/csv
         if csv:
             baseURL = self.baseURL + "exceptions/v2/csv"
             return self._make_request("get",baseURL)
 
-        return self.get_list_items("exceptions")
+        return self.get_list_items("exceptions",**kwargs)
 
     def get_detection_exception(self, exc_id):
         # /exceptions/v2/{exception_id}

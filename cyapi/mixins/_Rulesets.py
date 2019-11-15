@@ -33,11 +33,11 @@ class Mixin:
                 urls.append(baseURL.format(ruleset))
             return self._bulk_get(urls, paginated=False, disable_progress=disable_progress)
 
-    def get_rulesets(self, csv=False):
+    def get_rulesets(self, csv=False, **kwargs):
         if csv:
-            rulesets = self.get_list_items("rulesets", detail="/csv")
+            rulesets = self.get_list_items("rulesets", detail="/csv", **kwargs)
         else:
-            rulesets = self.get_list_items("rulesets")
+            rulesets = self.get_list_items("rulesets", **kwargs)
         return rulesets
 
     def update_detection_rule_set(self, ruleset_id, ruleset):

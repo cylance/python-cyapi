@@ -1,9 +1,9 @@
 
 class Mixin:
 
-    def get_retrieved_file_results(self):
+    def get_retrieved_file_results(self, **kwargs):
         # /devicecommands/v2/retrieved_files?page=m&page_size=n
-        return self.get_list_items("devicecommands", detail="/retrieved_files")
+        return self.get_list_items("devicecommands", detail="/retrieved_files", **kwargs)
 
     # Get Detection, might need better way to get additional detection pages
     def lockdown_device(self, device_id, exp):

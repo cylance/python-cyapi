@@ -20,13 +20,13 @@ class Mixin:
                 urls.append(baseURL.format(rule))
             return self._bulk_get(urls, paginated=False, disable_progress=disable_progress)
 
-    def get_detection_rules(self, csv=False):
+    def get_detection_rules(self, csv=False, **kwargs):
         # /rules/v2?page=m&page_size=n
         if csv:
             baseURL = self.baseURL + "rules/v2/csv"
             return self._make_request("get",baseURL)
 
-        return self.get_list_items("rules")
+        return self.get_list_items("rules", **kwargs)
 
     def get_detection_rule_counts(self, rule_id):
         # /rules/v2/{rule_id}/counts

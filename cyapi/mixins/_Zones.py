@@ -17,8 +17,8 @@ class Mixin:
 
         return self._make_request("delete",baseURL)
 
-    def get_zones(self):
-        zones = self.get_list_items("zones")
+    def get_zones(self, **kwargs):
+        zones = self.get_list_items("zones", **kwargs)
         return zones
 
     def get_zone(self, zone_id):
@@ -36,8 +36,9 @@ class Mixin:
                 urls.append(baseURL.format(zone))
             return self._bulk_get(urls, paginated=False, disable_progress=disable_progress)
 
-    def get_device_zones(self, device_id):
-        return self.get_list_items("zones", "/{}/zones".format(device_id))
+    def get_device_zones(self, device_id, **kwargs):
+        detail = "/{}/zones".format(device_id)
+        return self.get_list_items("zones", detail, **kwargs)
 
     def update_zone(self, zone_id, name, policy_id, criticality):
         # /zones/v2/{unique_zone_id}

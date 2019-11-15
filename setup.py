@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='cyapi',
-    version='0.9.12',
+    version='0.9.13',
     packages=find_packages(),
     license='GNU',
     long_description=open('README.md').read(),

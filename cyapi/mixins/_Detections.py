@@ -56,17 +56,17 @@ class Mixin:
         return self._make_request("delete",baseURL, data=data)
 
     # Get Detections
-    def get_recent_detections(self, since):
+    def get_recent_detections(self, since, **kwargs):
         """Get Detections since a certain time
         :param since: Time in Zulu - Format: 2018-07-26T01:20:07.596Z
         """
         params = {"since": since}
-        return self.get_list_items("detections", params=params)
+        return self.get_list_items("detections", params=params, **kwargs)
 
     # Get Detections, might need better way to get additional detection pages
     def get_detections(self, zulu_start=None, zulu_end=None, severity=None,
                        detection_type=None, event_number=None, device_name=None,
-                       status=None, sort=None, csv=False):
+                       status=None, sort=None, csv=False, **kwargs):
         ''':param start: Start time in Zulu: 2019-05-04T00:00:00.000Z
            :param end: End date-time in Zulu: 2019-05-04T23:00:00.000Z
            :param severity: Detection severity filter
@@ -117,7 +117,7 @@ class Mixin:
             baseURL = self._add_url_params(baseURL, params)
             return self._make_request("get", baseURL)
 
-        return self.get_list_items("detections", params=params)
+        return self.get_list_items("detections", params=params, **kwargs)
 
 
     # Get Detection, might need better way to get additional detection pages

@@ -17,8 +17,8 @@ class Mixin:
 
         return self._make_request("post",baseURL)
 
-    def get_users(self):
-        return self.get_list_items('users')
+    def get_users(self, **kwargs):
+        return self.get_list_items('users', **kwargs)
 
     def get_user(self, user_id):
         return self.get_item("users", user_id)

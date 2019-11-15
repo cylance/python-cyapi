@@ -22,9 +22,9 @@ class Mixin:
         return self._make_request("delete",baseURL)
 
     # Method to retrieve List of Packages
-    def get_packages(self):
+    def get_packages(self, **kwargs):
 
-        return self.get_list_items("packages")
+        return self.get_list_items("packages", **kwargs)
 
     # Method to execute a package by zone
     def execute_packages_by_zone(self, execution_name, zones, destination, arguments, package_to_execute, keepResultsLocally):

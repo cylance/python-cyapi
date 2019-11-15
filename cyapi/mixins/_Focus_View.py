@@ -11,13 +11,13 @@ class Mixin:
         baseURL = self.baseURL + "foci/v2/{}/results".format(focus_id)
         return self._make_request("get",baseURL)
 
-    def get_focus_views(self, q=None):
+    def get_focus_views(self, q=None, **kwargs):
         """q - case-insensitive search term"""
         # https://protectapi.cylance.com/foci/v2?page=1&page_size=100
         params = {}
         if q:
             params['q']= q
-        return self.get_list_items("foci", params=params)
+        return self.get_list_items("foci", params=params, **kwargs)
 
     def search_for_focus_view_results(self, uid, device_id):
         # /foci/v2/search
