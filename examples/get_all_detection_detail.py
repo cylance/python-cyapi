@@ -40,8 +40,6 @@ def ParseArgs():
 # Tenant Integration
 # Modify the keys to align with your tenant API
 ##################################################################################
-# Cylance SE Tenant
-##################################################################################
 
 commandline = ParseArgs()
 args = commandline.parse_args()

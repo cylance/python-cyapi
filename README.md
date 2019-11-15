@@ -27,6 +27,13 @@ print("Successful: {}".format(devices.is_success))
 pprint(devices.data[0]) # Print info about a single device.
 ```
 
+If you have lots of devices/threats/zones/etc, and you'd like to see a progress bar, pass the `disable_progress` parameter:
+
+```
+devices = API.get_devices(disable_progress=False)
+pprint(devices.data[0])
+```
+
 Additionally you can copy examples/simple_setup.py to your_new_file.py and begin hacking away from there.
 
 # Creds File
@@ -43,4 +50,4 @@ creds.json:
 }
 ```
 
-This file can then be passed in by passing -c path/to/creds.json
+This file can then be passed in by passing -c path/to/creds.json to any of the examples

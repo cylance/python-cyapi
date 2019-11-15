@@ -1,9 +1,5 @@
 # Simple example to read creds file, connect to API, and print detections.
 
-##################################################################################
-# USAGE
-#
-##################################################################################
 from __future__ import print_function
 import json
 from pprint import pprint
@@ -27,7 +23,6 @@ def ParseArgs():
     parser = argparse.ArgumentParser(description='Safelist all Trusted Local detections. See -F flag', add_help=True)
     parser.add_argument('-v', '--verbose', action="count", default=0, dest="debug_level",
                         help='Show process location, comments and api responses')
-    # Cylance SE Tenant
     parser.add_argument('-tid', '--tid_val', help='Tenant Unique Identifier')
     parser.add_argument('-aid', '--app_id', help='Application Unique Identifier')
     parser.add_argument('-ase', '--app_secret', help='Application Secret')
@@ -40,8 +35,6 @@ def ParseArgs():
 ##################################################################################
 # Tenant Integration
 # Modify the keys to align with your tenant API
-##################################################################################
-# Cylance SE Tenant
 ##################################################################################
 
 commandline = ParseArgs()

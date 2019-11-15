@@ -24,7 +24,7 @@ def ParseArgs():
         regions.append(k)
         regions_help += " {} - {} ".format(k,v['fullname'])
 
-    parser = argparse.ArgumentParser(description='Create a new OPTICS Rule Set based on an existing on and best practice phases.', add_help=True)
+    parser = argparse.ArgumentParser(description='Find all devices that have been offline for XX days (default: 30)', add_help=True)
     parser.add_argument('-v', '--verbose', action="count", default=0, dest="debug_level",
                         help='Show process location, comments and api responses')
     # Cylance SE Tenant
@@ -40,8 +40,6 @@ def ParseArgs():
 ##################################################################################
 # Tenant Integration
 # Modify the keys to align with your tenant API
-##################################################################################
-# Cylance SE Tenant
 ##################################################################################
 
 commandline = ParseArgs()
