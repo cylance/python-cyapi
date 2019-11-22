@@ -64,7 +64,7 @@ class Mixin:
     def get_agent_installer_link(self, product, os, arch, package, build=None):
         """endpoint: /devices/v2/installer?product=p&os=o&package=k&architecture=a&build=v"""
         baseURL = self.baseURL + "devices/v2/installer"
-        valid_products = ["Protect", "Optics", "Protect+Optics"]
+        valid_products = ["Protect", "Optics", "Protect Optics"]
         valid_packages = ["Exe", "Msi", "Dmg", "Pkg"]
         valid_archs = ["X86", "X64", "AmazonLinux1", "AmazonLinux2", "CentOS6", "CentOS6UI",
                        "CentOS7", "CentOS7UI", "Ubuntu1404", "Ubuntu1404UI", "Ubuntu1604",
@@ -76,7 +76,7 @@ class Mixin:
         self._validate_parameters(os, valid_os)
         self._validate_parameters(package, valid_packages)
         self._validate_parameters(arch, valid_archs)
-        params = {"product": product, "os": os, "arch": arch, "package": package, "build": build}
+        params = {"product": product, "os": os, "architecture": arch, "package": package, "build": build}
         baseURL = self._add_url_params(baseURL, params)
 
         return self._make_request("get",baseURL)
