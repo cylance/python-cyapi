@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "cyapi"
+version = "0.9.16"
+description "Python bindings for Cylance Console"
+
+license = "MIT"
+readme = "README.md"
+authors = ["Shane Shellenbarger <soggysec@gmail.com>", "Joe Delsol <joe@delsols.net>"]
+
+repository = "https://github.com/cylance/python-cyapi"
+
+[tool.poetry.dependencies]
+python = "*"
+futures = {python = "==2.7", version = "*"}
+pyjwt = "*"
+python-dateutil = "*"
+pytz = "*"
+requests = "*"
+tqdm = "*"
+
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

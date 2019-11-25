@@ -10,7 +10,7 @@ This Library provides python bindings to interact with the Cylance API. Examples
 # Installation
 
 ```
-python setup.py install
+pip install cyapi
 ```
 
 # Example
@@ -51,3 +51,7 @@ creds.json:
 ```
 
 This file can then be passed in by passing -c path/to/creds.json to any of the examples
+
+# Contributing
+
+See [CONTRIBUTING.md][CONTRIBUTING.md]
