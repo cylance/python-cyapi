@@ -109,7 +109,7 @@
 		},
 		{
 			"name": "logpolicy",
-			"value": "1"
+			"value": "0"
 		},
 		{
 			"name": "script_control",
@@ -240,7 +240,7 @@
 			}]
 		},
 		"logpolicy": {
-			"log_upload": "1",
+			"log_upload": "0",
 			"maxlogsize": "100",
 			"retentiondays": "30"
 		}
