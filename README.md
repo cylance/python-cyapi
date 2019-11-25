@@ -54,4 +54,4 @@ This file can then be passed in by passing -c path/to/creds.json to any of the e
 
 # Contributing
 
-See [CONTRIBUTING.md][CONTRIBUTING.md]
+See [CONTRIBUTING.md](CONTRIBUTING.md)
