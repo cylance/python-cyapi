@@ -1,7 +1,7 @@
 
 class Mixin:
 
-    def delete_devices(self, device_ids, callback_url=""):
+    def delete_devices(self, device_ids, callback_url=None):
         baseURL = self.baseURL + "devices/v2"
 
         data = {
