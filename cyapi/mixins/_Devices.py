@@ -51,7 +51,7 @@ class Mixin:
     def update_device(self, device_id, device):
         """endpoint: /devices/v2/{unique_device_id}"""
         baseURL = self.baseURL + "devices/v2/{}".format(device_id)
-        return self._make_request("post",baseURL, data=device)
+        return self._make_request("put",baseURL, data=device)
 
     def update_device_threat(self, device_id, event, threat_id):
         """endpoint: /devices/v2/{unique_device_id}/threats"""
