@@ -284,7 +284,8 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
         return self._make_request("get",baseURL)
 
     def _generate_urls(self, page_type, page=1, page_size=200, detail="",params={}, total_pages=0):
-            q_params = {"page": page, "page_size": page_size}
+            start_page = page
+            q_params = {"page": start_page, "page_size": page_size}
 
             if params:
                 q_params.update(params)
@@ -301,7 +302,7 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
                 total_pages = data['total_pages']
 
             all_urls = [baseURL,]
-            for page in range(2,total_pages+1):
+            for page in range(start_page, total_pages+1):
                 updated_param = {"page":page}
                 baseURL = self._add_url_params(baseURL, updated_param)
                 all_urls.append(baseURL)
@@ -355,9 +356,11 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
 
 
     # Method to retrieve list of items
-    def get_list_items(self, type_name, detail="", limit=200, params={}, disable_progress=True, total_pages=0):
+    def get_list_items(self, type_name, detail="", limit=200, params={}, disable_progress=True, total_pages=0,
+                       start_page=1):
 
-        urls = self._generate_urls(type_name, detail=detail, page_size=limit, params=params, total_pages=total_pages)
+        urls = self._generate_urls(type_name, detail=detail, page_size=limit, params=params, total_pages=total_pages,
+                                   page=start_page)
 
         return self._bulk_get(urls, disable_progress)
 
