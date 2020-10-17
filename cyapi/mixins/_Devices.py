@@ -65,7 +65,7 @@ class Mixin:
         """endpoint: /devices/v2/installer?product=p&os=o&package=k&architecture=a&build=v"""
         baseURL = self.baseURL + "devices/v2/installer"
         valid_products = ["Protect", "Optics", "Protect Optics"]
-        valid_packages = ["Exe", "Msi", "Dmg", "Pkg"]
+        valid_packages = ["Exe", "Msi", "Dmg", "Pkg", ""]
         valid_archs = ["X86", "X64", "AmazonLinux1", "AmazonLinux2", "CentOS6", "CentOS6UI",
                        "CentOS7", "CentOS7UI", "Ubuntu1404", "Ubuntu1404UI", "Ubuntu1604",
                        "Ubuntu1604UI", "Ubuntu1804", "Ubuntu1804UI" ]
