@@ -2,14 +2,21 @@
 class Mixin:
 
     def delete_devices(self, device_ids, callback_url=None):
+        """Delete device(s) for many IDs
+        :param device_ids: must be a list of device_ids
+        """
         baseURL = self.baseURL + "devices/v2"
-
-        data = {
-            "device_ids": device_ids,
-            "callback_url": callback_url
-        }
-
-        return self._make_request("delete", baseURL, data=data)
+        if callback_url == None:
+            data = {
+                "device_ids": device_ids
+            }
+            return self._make_request("delete", baseURL, data=data)
+        else:
+            data = {
+                "device_ids": device_ids,
+                "callback_url": callback_url
+            }
+            return self._make_request("delete", baseURL, data=data)
 
     def get_devices(self, **kwargs):
         '''Get a list of Devices'''
