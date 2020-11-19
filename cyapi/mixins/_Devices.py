@@ -2,7 +2,7 @@
 class Mixin:
 
     def delete_devices(self, device_ids, callback_url=None):
-        """Delete device(s) for many IDs
+        """Delete device(s) per ID(s)
         :param device_ids: must be a list of device_ids
         """
         baseURL = self.baseURL + "devices/v2"
