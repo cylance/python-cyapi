@@ -31,6 +31,7 @@ from .mixins._Exceptions import Mixin as ExceptionsMixin
 from .mixins._Focus_View import Mixin as FocusViewMixin
 from .mixins._Global_List import Mixin as GlobalListMixin
 from .mixins._InstaQueries import Mixin as InstaQueriesMixin
+from .mixins._Memory_Protection import Mixin as MemoryProtectionMixin
 from .mixins._Optics_Policies import Mixin as OpticsPoliciesMixin
 from .mixins._Packages import Mixin as PackagesMixin
 from .mixins._Policies import Mixin as PoliciesMixin
@@ -51,7 +52,7 @@ except ImportError:
 
 
 class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
-            FocusViewMixin, GlobalListMixin,InstaQueriesMixin,OpticsPoliciesMixin,
+            FocusViewMixin, GlobalListMixin,InstaQueriesMixin,MemoryProtectionMixin,OpticsPoliciesMixin,
             PackagesMixin,PoliciesMixin,RulesMixin,RulesetMixin,
             ThreatsMixin,UsersMixin,ZonesMixin):
     """The main class that should be used. Each of the Mixins above provides the
