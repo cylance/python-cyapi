@@ -40,7 +40,7 @@ class Mixin:
 
     def create_detection_rule(self, rule_data):
         # /rules/v2
-        baseURL = self.baseURL + "rules/v2/validate"
+        baseURL = self.baseURL + "rules/v2"
         return self._make_request("post",baseURL, data=rule_data)
 
     def update_detection_rule(self, rule_id, rule_data):
