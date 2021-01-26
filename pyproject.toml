@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "cyapi"
-version = "1.0.10"
-description "Python bindings for Cylance Console and MTC"
+version = "0.9.17"
+description = "Python bindings for Cylance Console"
 
 license = "MIT"
 readme = "README.md"
