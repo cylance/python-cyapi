@@ -61,6 +61,16 @@ else:
     exit(-1)
 
 API.create_conn()
-detections = API.get_detections()
 
-pprint(detections)
+devices = API.get_devices()
+for d in devices.data:
+    zones = API.get_device_zones(d.get("id"))
+    if not zones.data:
+        print(f"DEVICE: {d.get('name')}")
+        print("No Zone Attached")
+
+#zoneDevices = API.get_device_zones()
+#pprint(zonesDevices.data)
+
+#detections = API.get_detections()
+#pprint(detections.data)
