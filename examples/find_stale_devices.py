@@ -1,4 +1,5 @@
-# Simple example to read creds file, connect to API, and print detections.
+# Simple example to read creds file, connect to API, and print stale devices.
+# Use the --days argument to specify stale day amount, other than the default 30.
 from __future__ import print_function
 
 import argparse
