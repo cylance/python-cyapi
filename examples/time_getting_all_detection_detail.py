@@ -1,4 +1,4 @@
-# Simple example to read creds file, connect to API, and devices w/0 zones.
+# Simple example to read creds file, connect to API, and print detections.
 
 ##################################################################################
 # USAGE
@@ -24,9 +24,10 @@ def ParseArgs():
         regions.append(k)
         regions_help += " {} - {} ".format(k,v['fullname'])
 
-    parser = argparse.ArgumentParser(description='Simple example to build from', add_help=True)
+    parser = argparse.ArgumentParser(description='Get Detection Detail for all Detections', add_help=True)
     parser.add_argument('-v', '--verbose', action="count", default=0, dest="debug_level",
                         help='Show process location, comments and api responses')
+    # Cylance SE Tenant
     parser.add_argument('-tid', '--tid_val', help='Tenant Unique Identifier')
     parser.add_argument('-aid', '--app_id', help='Application Unique Identifier')
     parser.add_argument('-ase', '--app_secret', help='Application Secret')
@@ -34,6 +35,11 @@ def ParseArgs():
     parser.add_argument('-r', '--region', dest='region', help=regions_help, choices=regions, default='NA')
 
     return parser
+
+##################################################################################
+# Tenant Integration
+# Modify the keys to align with your tenant API
+##################################################################################
 
 commandline = ParseArgs()
 args = commandline.parse_args()
@@ -60,16 +66,27 @@ else:
     print("[-] Must provide valid token information")
     exit(-1)
 
+print("Getting Detections")
 API.create_conn()
+detections = API.get_detections()
 
-cnt = 0
-devices = API.get_devices()
-for d in devices.data:
-    zones = API.get_device_zones(d.get("id"))
-    if not zones.data:
-        cnt = cnt + 1
-        print(f"DEVICE: {d.get('name')}")
-        print("No Zone Attached")
+ids = []
+print("You have {} IDs. This might take ~{} minutes to collect the details.".format(len(detections.data),int(len(detections.data)/(5000/12))))
+for d in detections.data:
+    try:
+        ids.append(d['Id'])
+    except:
+        pprint(d)
 
-if cnt == 0:
-    print("All devices have zones attached. Terrific!")
+from datetime import datetime
+startTime = datetime.now()
+
+# This is a non-paralellized way of doing it
+# detection_detail = []
+# for d in detections.data:
+#     data = API.get_detection(d['Id']).data
+#     detection_detail.append(data)
+detection_detail = API.get_bulk_detection(ids)
+
+print("Number of detections retrieved: {}".format(len(detection_detail.data)))
+print("Time to execute: {}".format(datetime.now() - startTime))

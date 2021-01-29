@@ -40,6 +40,11 @@ from .mixins._Rulesets import Mixin as RulesetMixin
 from .mixins._Threats import Mixin as ThreatsMixin
 from .mixins._Users import Mixin as UsersMixin
 from .mixins._Zones import Mixin as ZonesMixin
+from .mixins._MTC_HealthCheck import Mixin as MTCHealthCheckMixin
+from .mixins._MTC_PolicyTemplates import Mixin as MTCPolicyTemplatesMixin
+from .mixins._MTC_Reports import Mixin as MTCReportsMixin
+from .mixins._MTC_Tenants import Mixin as MTCTenantsMixin
+from .mixins._MTC_Users import Mixin as MTCUsersMixin
 
 try:
     from urllib import urlencode, unquote
@@ -54,7 +59,8 @@ except ImportError:
 class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
             FocusViewMixin, GlobalListMixin,InstaQueriesMixin,MemoryProtectionMixin,OpticsPoliciesMixin,
             PackagesMixin,PoliciesMixin,RulesMixin,RulesetMixin,
-            ThreatsMixin,UsersMixin,ZonesMixin):
+            ThreatsMixin,UsersMixin,ZonesMixin,MTCHealthCheckMixin,MTCPolicyTemplatesMixin,
+            MTCReportsMixin,MTCTenantsMixin,MTCUsersMixin):
     """The main class that should be used. Each of the Mixins above provides the
        functionality for that specific API. Example: DetectionsMixin implements
        all relevant functions to getting / working with detections.
@@ -65,12 +71,16 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
        At this point you're ready to begin interacting with the API.
     """
     regions = {
-       'NA': {'fullname':'North America',        'url':''},
+       'NA': {'fullname': 'North America',       'url':''},
+       'US': {'fullname': 'United States',                          'mtc_url':'us'},
        'APN': {'fullname': 'Asia Pacific-North', 'url': '-apne1'},
+       'JP': {'fullname': 'Asia Pacific NE/Japan',                  'mtc_url':'jp'},
        'APS': {'fullname': 'Asia Pacific-South', 'url': '-au'},
-       'EU': {'fullname': 'Europe',              'url': '-euc1'},
+       'AU': {'fullname': 'Asia Pacific SE/Australia',              'mtc_url':'au'},
+       'EU': {'fullname': 'Europe',              'url': '-euc1',    'mtc_url':'eu'},
        'GOV': {'fullname': 'US-Government',      'url': '-us'},
-       'SA': {'fullname': 'South America',       'url': '-sae1'}
+       'SA': {'fullname': 'South America',       'url': '-sae1'},
+       'SP': {'fullname': 'South America/Sao Paulo',                'mtc_url': 'sp'}
     }
 
     valid_detection_statuses = ["New", "In Progress", "Follow Up", "Reviewed", "Done", "False Positive"]
@@ -84,13 +94,20 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
 
     WORKERS = 20
 
-    def __init__(self, tid=None, app_id=None, app_secret=None, region="NA"):
+    def __init__(self, tid=None, app_id=None, app_secret=None, region="NA", mtc=False, tenant_app=False, tenant_jwt=None):
         self.tid_val = tid
         self.app_id = app_id
         self.app_secret = app_secret
         self.jwt = None
         self.region = region
-        self.baseURL = "https://protectapi{}.cylance.com/".format(self.regions[region]['url'])
+        self.mtc = mtc
+        self.tenant_app = tenant_app
+        self.tenant_jwt = tenant_jwt
+
+        if self.mtc:
+            self.baseURL = "https://api-admin.cylance.com/public/{}/".format(self.regions[region]['mtc_url'])
+        else:
+            self.baseURL = "https://protectapi{}.cylance.com/".format(self.regions[region]['url'])
         self.debug_level = debug_level
         self.s = None
         self.req_cnt = 0
@@ -102,13 +119,31 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
 
         self.s = self._setup_session(session=self.s)
 
-        self.jwt = self._get_jwt()
-        self.headers = {
-            'Accept': "application/json",
-            'Accept-Encoding': "gzip,compress",
-            'Authorization': "Bearer {}".format(self.jwt),
-            'Cache-Control': "no-cache"
-        }
+        if self.mtc:
+            self.auth = self._get_auth_token()
+            self.headers = {
+                "Content-Type": "application/json; charset=utf-8",
+                "Accept": "*/*",
+                'Accept-Encoding': "gzip,deflate,br",
+                'Authorization': "Bearer {}".format(self.auth)
+            }
+        else:
+            if self.tenant_app:
+                self.jwt = self.tenant_jwt
+            else:
+                self.jwt = self._get_jwt()
+            self.headers = {
+                'Accept': "application/json",
+                'Accept-Encoding': "gzip,compress",
+                'Authorization': "Bearer {}".format(self.jwt),
+                'Cache-Control': "no-cache"
+            }
+
+        # # 30 minutes from now
+        timeout = 1800
+        now = datetime.utcnow()
+        timeout_datetime = now + timedelta(seconds=timeout)
+        self.access_token_expiration = timeout_datetime - timedelta(seconds=30)
 
         self.s.headers.update(self.headers)
 
@@ -144,12 +179,12 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
 
         AUTH_URL = self.baseURL + "auth/v2/token"
         claims = {
-         "exp": epoch_timeout,
-         "iat": epoch_time,
-         "iss": "http://cylance.com",
-         "sub": self.app_id,
-         "tid": self.tid_val,
-         "jti": jti_val
+            "exp": epoch_timeout,
+            "iat": epoch_time,
+            "iss": "http://cylance.com",
+            "sub": self.app_id,
+            "tid": self.tid_val,
+            "jti": jti_val
         }
 
         encoded = jwt.encode(claims, self.app_secret, algorithm='HS256').decode('utf-8')
@@ -157,17 +192,58 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
             print( "auth_token:\n" + encoded + "\n" )
         payload = {"auth_token": encoded}
         headers = {"Content-Type": "application/json; charset=utf-8"}
-        resp = requests.post(AUTH_URL, headers=headers, json=payload)
+        resp = requests.post(AUTH_URL, headers=headers, data=json.dumps(payload))
 
         # Can't do anything without a successful authentication
-        assert resp.status_code == 200
+        try:
+            assert resp.status_code == 200
+        except AssertionError:
+            try:
+                errors = resp.json()
+            except json.decoder.JSONDecodeError:
+                errors = None
+            print("Failed request for JWT Token: {}".format(resp.status_code))
+            print("Description:\n{}".format(errors))
+            exit()
+
         data = resp.json()
         token = data.get('access_token',None)
         if debug_level > 1:
             print( "http_status_code: {}".format(resp.status_code) )
             print( "access_token:\n" + token + "\n" )
 
-        self.access_token_expiration = timeout_datetime - timedelta(seconds=30)
+        return token
+
+    def _get_auth_token(self):
+        """Get auth token for MTC"""
+        AUTH_URL = self.baseURL + "auth"
+        claims = {
+        "scope" : "api",
+        "grant_type" : "client_credentials"
+        }
+        payload = claims
+
+        headers = {"Content-Type": "application/json; charset=utf-8"}
+        resp = requests.post(AUTH_URL, data=payload, auth=(self.app_id,self.app_secret))
+
+        # Can't do anything without a successful authentication
+        try:
+            assert resp.status_code == 200
+        except AssertionError:
+            try:
+                errors = resp.json()
+            except json.decoder.JSONDecodeError:
+                errors = None
+            print("Failed request for MTC Auth Token: {}".format(resp.status_code))
+            print("Description:\n{}".format(errors))
+            exit()
+
+        data = resp.json()
+        token = data.get('access_token',None)
+        if debug_level > 1:
+            print( "http_status_code: {}".format(resp.status_code) )
+            print( "access_token:\n" + token + "\n" )
+
         return token
 
     def _make_request(self, method, url, data=None):
@@ -178,9 +254,14 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
             self.req_cnt = 0
             # Refresh the token if needed
             self.create_conn()
-
         if method == "get":
-            return ApiResponse(self.s.get(url))
+            resp = self.s.get(url)
+            # loop if rate limited
+            # TODO: Improve method when headers are uniformally supported
+            while resp.status_code == 429:
+                time.sleep(1)
+                resp = self.s.get(url)
+            return ApiResponse(resp)
         elif method == "post":
             if data:
                 return ApiResponse(self.s.post(url, json=data))
@@ -290,8 +371,11 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
             if params:
                 q_params.update(params)
 
-            baseURL = self.baseURL + "{}/v2{}".format(page_type, detail)
-            baseURL = self._add_url_params(baseURL, q_params)
+            if self.mtc:
+                baseURL = self.baseURL + "{}/{}".format(page_type,detail)
+            else:
+                baseURL = self.baseURL + "{}/v2/{}".format(page_type, detail)
+                baseURL = self._add_url_params(baseURL, q_params)
 
             response = self._make_request("get",baseURL)
             assert response.is_success
@@ -362,13 +446,16 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
 
         return self._bulk_get(urls, disable_progress)
 
-    # Method to retrieve an Optics Item
+    # Method to retrieve an Item
     # This may not be anything as a result of edit error..
     # TODO: Make this return a response instead of a JSON object
     def get_item(self, ptype, item):
         #Type options: rulesets, policies
 
-        baseURL = self.baseURL + "{}/v2/{}".format(ptype, item)
+        if self.mtc:
+            baseURL = self.baseURL + "{}/{}".format(ptype, item)
+        else:
+            baseURL = self.baseURL + "{}/v2/{}".format(ptype, item)
 
         response = self._make_request("get",baseURL)
         return response
@@ -377,9 +464,18 @@ class ApiResponse:
     def __init__(self, response):
         self.status_code = response.status_code
         self.is_success = response.status_code < 300
+        self.headers = response.headers
         self.data = None
         self.errors = None
+
         if self.is_success:
+            # 02/29/2021
+            # Replacing the commented variables and 'if' in favor
+            # of the try/except and re.sub lines to accept
+            # non-json values/messages when a successful response
+            # is sent.
+            # This would omit a 'None' data response.
+            """
             try:
                 headers = response.headers
                 content = headers.get('content-type')
@@ -389,6 +485,13 @@ class ApiResponse:
                     self.data = response.text
             except json.decoder.JSONDecodeError:
                 self.data = None
+            """
+            try:
+                self.data = response.json()
+                ####print("Good Data: {}".format(self.data))
+            except json.decoder.JSONDecodeError:
+                # Removing the wrapper characters of a string response
+                self.data = re.sub('{|"|}', "",response.text)
 
         else:
             try:
