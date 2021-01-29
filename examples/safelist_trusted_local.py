@@ -72,7 +72,7 @@ else:
 API.create_conn()
 threats = API.get_threats()
 tl_threats = []
-for threat in threats:
+for threat in threats.data:
     if "Trusted" == threat.get('classification') and "Local" == threat.get('sub_classification'):
         tl_threats.append(threat)
 

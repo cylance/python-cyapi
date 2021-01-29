@@ -1,4 +1,5 @@
-# Simple example to read creds file, connect to API, and print detections.
+# Simple example to read creds file, connect to the MTC (Multi Tenant Console) API,
+# and print tenant list.
 
 ##################################################################################
 # USAGE
@@ -24,22 +25,17 @@ def ParseArgs():
         regions.append(k)
         regions_help += " {} - {} ".format(k,v['fullname'])
 
-    parser = argparse.ArgumentParser(description='Get Detection Detail for all Detections', add_help=True)
+    parser = argparse.ArgumentParser(description='Simple example to build from', add_help=True)
     parser.add_argument('-v', '--verbose', action="count", default=0, dest="debug_level",
                         help='Show process location, comments and api responses')
-    # Cylance SE Tenant
     parser.add_argument('-tid', '--tid_val', help='Tenant Unique Identifier')
     parser.add_argument('-aid', '--app_id', help='Application Unique Identifier')
     parser.add_argument('-ase', '--app_secret', help='Application Secret')
     parser.add_argument('-c', '--creds_file', dest='creds', help='Path to JSON File with API info provided')
     parser.add_argument('-r', '--region', dest='region', help=regions_help, choices=regions, default='NA')
+    parser.add_argument('-m', '--mtc', dest='mtc', help='Indicates API connection via MTC', default=False, action='store_true')
 
     return parser
-
-##################################################################################
-# Tenant Integration
-# Modify the keys to align with your tenant API
-##################################################################################
 
 commandline = ParseArgs()
 args = commandline.parse_args()
@@ -54,39 +50,30 @@ if args.creds:
     if not creds.get('region'):
         creds['region'] = args.region
 
+    if not creds.get('mtc'):
+        creds['mtc'] = args.mtc
+
     API = CyAPI(**creds)
 
 elif args.tid_val and args.app_id and args.app_secret:
     tid_val = args.tid_val
     app_id = args.app_id
     app_secret = args.app_secret
-    API = CyAPI(tid_val,app_id,app_secret,args.region)
+    API = CyAPI(tid_val,app_id,app_secret,args.region,args.mtc)
 
 else:
     print("[-] Must provide valid token information")
     exit(-1)
 
-print("Getting Detections")
 API.create_conn()
-detections = API.get_detections()
 
-ids = []
-print("Got {} IDs".format(len(detections.data)))
-for d in detections.data:
-    try:
-        ids.append(d['Id'])
-    except:
-        pprint(d)
+cnt = 0
+header = "Count,ID,Name,Created\n"
 
-from datetime import datetime
-startTime = datetime.now()
+tenants = API.get_tenants()
 
-# This is a non-paralellized way of doing it
-# detection_detail = []
-# for d in detections.data:
-#     data = API.get_detection(d['Id']).data
-#     detection_detail.append(data)
-detection_detail = API.get_bulk_detection(ids)
-
-print("Number of detections retrieved: {}".format(len(detection_detail.data)))
-print("Time to execute: {}".format(datetime.now() - startTime))
+print(header)
+for t in tenants.data['listData']:
+    cnt = cnt+1
+    print("{},{},{},{}".format(cnt,t['id'],t['name'],t['createdDateTime']))
+    #print(t)
