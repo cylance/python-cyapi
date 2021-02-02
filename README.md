@@ -6,6 +6,7 @@ This Library provides python bindings to interact with the Cylance API. Examples
 * Python 2.7 & Python 3 Compatible
 * Windows
 * Mac
+* Linux
 
 # Installation
 
@@ -40,6 +41,7 @@ Additionally you can copy examples/simple_setup.py to your_new_file.py and begin
 
 You can create a file that will store your api credentials instead of passing them in via the command line. The creds file should look like the following:
 
+For a standard tenant:
 creds.json:
 ```
 {
@@ -50,7 +52,17 @@ creds.json:
 }
 ```
 
-This file can then be passed in by passing -c path/to/creds.json to any of the examples
+For a Multi-Tenant Console (MTC)
+```
+{
+    "tid": "Not Used for MTC Auth",
+    "app_id": "11111111-222222-33333-44444444",
+    "app_secret": "555555-666666-222222-444444",
+    "region": "NA",
+    "mtc": "True"
+}
+```
+The creds json file can then be passed in by passing -c path/to/creds.json to any of the examples
 
 # Contributing
 
