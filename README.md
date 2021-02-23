@@ -16,6 +16,17 @@ pip install cyapi
 
 # Example
 
+Please note there are a number of example scripts in the examples directory. These are valuable for initial authentication as well as some basic interactions with the library. The example scripts include:
+Single Tenant
+> simple_setup.py
+> find_stale_devices.py
+> safelist_trusted_local.py
+> time_getting_all_detection_detail.py
+
+Multi-Tenant Console (MTC)
+> simple_MTC_setup.py
+> MTC_tenants_loop.py
+
 This example will create a connection to the API and return all devices that have registered.
 
 ```
@@ -63,6 +74,12 @@ For a Multi-Tenant Console (MTC)
 }
 ```
 The creds json file can then be passed in by passing -c path/to/creds.json to any of the examples
+
+# API End Point Documentation
+
+Tenant User API Guide - https://docs.blackberry.com/content/dam/docs-blackberry-com/release-pdfs/en/cylance-products/api-and-developer-guides/Cylance%20User%20API%20Guide%20v2.0%20rev24.pdf
+Tenant User API Release Notes - https://docs.blackberry.com/en/unified-endpoint-security/cylance--products/cylance-api-release-notes/BlackBerry-Cylance-API-release-notes
+Multi-Tenant API - https://dev-admin.cylance.com/documentation/api.html
 
 # Contributing
 
