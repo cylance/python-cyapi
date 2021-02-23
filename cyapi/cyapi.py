@@ -378,7 +378,16 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
                 baseURL = self._add_url_params(baseURL, q_params)
 
             response = self._make_request("get",baseURL)
-            assert response.is_success
+            try:
+                assert response.status_code == 200
+            except AssertionError:
+                print("Failed initial request for {} w/ Status Code: {}".format(page_type, response.status_code))
+                print("get URL:\n{}".format(baseURL))
+                if response.errors:
+                    print("Error(s)")
+                    for k in response.errors:
+                        print("{}: {}".format(k,response.errors.get(k)))
+                exit()
             data = response.data
 
             page_size = data['page_size']
