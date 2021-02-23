@@ -375,7 +375,7 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
             if self.mtc:
                 baseURL = self.baseURL + "{}/{}".format(page_type,detail)
             else:
-                baseURL = self.baseURL + "{}/v2/{}".format(page_type, detail)
+                baseURL = self.baseURL + "{}/v2{}".format(page_type, detail)
                 baseURL = self._add_url_params(baseURL, q_params)
 
             response = self._make_request("get",baseURL)

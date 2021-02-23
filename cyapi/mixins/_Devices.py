@@ -56,7 +56,7 @@ class Mixin:
         # /devices/v2/{unique_device_id}/threats?page=m&page_size=n
         detail = "/{}/threats".format(device_id)
 
-        return self.get_list_items("devices", limit=0, detail=detail, **kwargs)
+        return self.get_list_items("devices", detail=detail, **kwargs)
 
     def get_zone_devices(self, zone_id, **kwargs):
         '''Return list of devices for a given zone'''
