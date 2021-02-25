@@ -198,13 +198,18 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
         try:
             assert resp.status_code == 200
         except AssertionError:
+            error_message = []
             try:
                 errors = resp.json()
             except json.decoder.JSONDecodeError:
                 errors = None
-            print("Failed request for JWT Token: {}".format(resp.status_code))
-            print("Description:\n{}".format(errors))
-            exit()
+            error_message.append("Failed request for JWT Token.")
+            error_message.append("  Response Status Code: {}".format(resp.status_code))
+            if not errors == None:
+                error_message.append("  Error(s):")
+                for k in errors:
+                    error_message.append("    {}: {}".format(k,errors[k]))
+            raise RuntimeError('\n'.join(error_message))
 
         data = resp.json()
         token = data.get('access_token',None)
@@ -230,13 +235,18 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
         try:
             assert resp.status_code == 200
         except AssertionError:
+            error_message = []
             try:
                 errors = resp.json()
             except json.decoder.JSONDecodeError:
                 errors = None
-            print("Failed request for MTC Auth Token: {}".format(resp.status_code))
-            print("Description:\n{}".format(errors))
-            exit()
+            error_message.append("  Failed request for MTC Auth Token")
+            error_message.append("  Response Status Code: {}".format(resp.status_code))
+            if not errors == None:
+                error_message.append("  Error(s):")
+                for k in errors:
+                    error_message.append("    {}: {}".format(k,errors[k]))
+            raise RuntimeError('\n'.join(error_message))
 
         data = resp.json()
         token = data.get('access_token',None)
@@ -382,13 +392,15 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
             try:
                 assert response.status_code == 200
             except AssertionError:
-                print("Failed initial request for {} w/ Status Code: {}".format(page_type, response.status_code))
-                print("get URL:\n{}".format(baseURL))
+                error_message = []
+                error_message.append("Failed initial request for {}.".format(page_type))
+                error_message.append("  get URL:\n    {}".format(baseURL))
+                error_message.append("  Response Status Code: {}".format(response.status_code))
                 if response.errors:
-                    print("Error(s)")
+                    error_message.append("Error(s)")
                     for k in response.errors:
-                        print("{}: {}".format(k,response.errors.get(k)))
-                exit()
+                        error_message.append("  {}: {}".format(k,response.errors.get(k)))
+                raise RuntimeError('\n'.join(error_message))
             data = response.data
 
             page_size = data['page_size']
