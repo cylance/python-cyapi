@@ -187,7 +187,14 @@ class CyAPI(DetectionsMixin,DevicesMixin,DeviceCommandsMixin,ExceptionsMixin,
             "jti": jti_val
         }
 
-        encoded = jwt.encode(claims, self.app_secret, algorithm='HS256').decode('utf-8')
+        try:
+            # This is left for compatibility with PyJWT prior to 2.0.0
+            encoded = jwt.encode(claims, self.app_secret, algorithm='HS256').decode('utf-8')
+        except:
+            encoded = jwt.encode(claims, self.app_secret, algorithm='HS256')
+
+        print(type(encoded))
+        print(encoded)
         if debug_level > 2:
             print( "auth_token:\n" + encoded + "\n" )
         payload = {"auth_token": encoded}
