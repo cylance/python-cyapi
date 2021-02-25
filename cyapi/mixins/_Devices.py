@@ -24,7 +24,7 @@ class Mixin:
 
     def get_devices_extended(self, **kwargs):
         '''Get a list of Devices w/ extended information'''
-        return self.get_list_items('devices', detail='extended', **kwargs)
+        return self.get_list_items('devices', detail='/extended', **kwargs)
 
     def get_device_count(self, **kwargs):
         '''Get a list of list of products, product versions,
