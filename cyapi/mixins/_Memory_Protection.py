@@ -4,6 +4,13 @@ class Mixin:
         '''Get a list of Memoryprotection Events'''
         if end_time and not start_time:
             raise ValueError("start_time must be set if using end_time parameter")
+            
+        '''Parse out Datetime Objects'''
+        if isinstance(start_time, datetime):
+            start_time = start_time.timestamp()  
+        if isinstance(end_time, datetime):
+            end_time = end_time.timestamp()
+
         params = {"start_time": start_time, "end_time": end_time}
 
         return self.get_list_items('memoryprotection', params=params, **kwargs)
