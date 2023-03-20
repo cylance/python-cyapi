@@ -33,7 +33,7 @@ This example will create a connection to the API and return all devices that hav
 ```
 from cyapi.cyapi import CyAPI
 from pprint import pprint
-API = CyAPI(tid=your_id, aid=your_aid, ase=your_ase)
+API = CyAPI(tid=your_id, app_id=your_app_id, app_secret=your_app_secret)
 API.create_conn()
 devices = API.get_devices()
 print("Successful: {}".format(devices.is_success))
